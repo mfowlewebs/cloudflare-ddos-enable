@@ -14,11 +14,11 @@ function list(names){
 		}, ["?match=any"]).join("");
 	}
 	console.log(params)
-	return fetch("https://api.cloudflare.com/client/v4/zones" + params).then(fetch.json);
+	return fetch.fetchAllPages("https://api.cloudflare.com/client/v4/zones" + params);
 }
 
 function detail(id){
-	return fetch("https://api.cloudflare.com/client/v4/zones/" + id).then(fetch.json);
+	return fetch.fetchAllPages("https://api.cloudflare.com/client/v4/zones/" + id);
 }
 
 function details(...names){
