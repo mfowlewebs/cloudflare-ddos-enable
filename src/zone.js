@@ -13,19 +13,19 @@ function list(names){
 			return state;
 		}, ["?match=any"]).join("");
 	}
-	console.log(params)
 	return fetch.fetchAllPages("https://api.cloudflare.com/client/v4/zones" + params);
 }
 
 function detail(id){
-	return fetch.fetchAllPages("https://api.cloudflare.com/client/v4/zones/" + id);
+	return fetch.fetch("https://api.cloudflare.com/client/v4/zones/" + id).then(fetch.json);
 }
 
-function details(...names){
-	return list.apply(null, names).then(function(){
+function details(names){
+	return list(names).then(function(){
 		
 	});
 }
 
 module.exports.list = list;
+module.exports.detail = detail;
 module.exports.details = details;
