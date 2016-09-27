@@ -6,7 +6,7 @@ function list(names){
 		if(!Array.isArray(names)){
 			names = [names]
 		}
-		params = names.reduce(function(state, name, i){
+		params = names.reduce(function(state, name){
 			if(name){
 				state.push("&name=", name);
 			}
@@ -16,16 +16,14 @@ function list(names){
 	return fetch.fetchAllPages("https://api.cloudflare.com/client/v4/zones" + params);
 }
 
-function detail(id){
-	return fetch.fetch("https://api.cloudflare.com/client/v4/zones/" + id).then(fetch.json);
+function details(zoneId){
+	return fetch.fetch("https://api.cloudflare.com/client/v4/zones/" + zoneId).then(fetch.json);
 }
 
-function details(names){
-	return list(names).then(function(){
-		
-	});
+function settings(zoneId){
+	return fetch.fetch("https://api.cloudflare.com/client/v4/zones/" + zoneId + "/settings").then(fetch.json);
 }
 
 module.exports.list = list;
-module.exports.detail = detail;
 module.exports.details = details;
+module.exports.settings = settings;

@@ -8,30 +8,42 @@ module.exports.fetch = fetch;
 module.exports.record = record;
 module.exports.zone = zone;
 
-function main(){
-	//if(process.argv.length <= 2){
-	//	throw new Error("No domain names specified")
-	//}
-	var zones = zone.list(process.argv.slice(2));
-	zones.then(function(zones){
-		function pick(){
-			return zones[Math.floor(Math.random() * zones.length)];
-		}
-		var picks = [pick(), pick(), pick(), pick()];
-		//console.log(picks[0], picks[1]);
-		picks.forEach(function(pick){
-			zone.detail(pick.id).then(function(z){
-				console.log(JSON.stringify(z));
-			});
-		});
+/**
+ * Print all zone id's to console.
+ */
+function getAllZoneIds(optionalFilters){
+	return zone.list(optionalFilters).then(function(zones){
+		zones.map(z => console.log(z.id));
+		return zones;
 	});
+}
+
+/**
+ * Enable proxy for all records in a zone
+ */
+function proxyZone(zoneIds){
+	var results = zoneIds.map(record.setProxiedForZone);
+	return Promise.all(results);
+}
+
+function main(){
+	if(process.argv.length <= 2){
+		return getAllZoneIds();
+	}else{
+		var zoneIds = process.argv.slice(2);
+		proxyZone(zoneIds);
+	}
 }
 
 function unhandledRejection(){
 	process.on("unhandledRejection", function(rej){
 		console.error(rej)
 		process.exit(2);
-	})
+	});
+	process.on("uncaughtException", function(ex){
+		console.log(ex);
+		process.exit(2);
+	});
 }
 
 if(require.main === module){
@@ -39,5 +51,7 @@ if(require.main === module){
 	main();
 }
 
-module.exports.main= main;
+module.exports.main = main;
+module.exports.getAllZoneIds = getAllZoneIds;
+module.exports.proxyZone = proxyZone;
 module.exports.unhandledRejection= unhandledRejection;
