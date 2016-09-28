@@ -4,15 +4,19 @@ function list(zoneId){
 	return fetch.fetchAllPages("https://api.cloudflare.com/client/v4/zones/" + zoneId + "/dns_records");
 }
 
-function setProxied(zoneId){
-	return fetch.fetch("https://api.cloudflare.com/client/v4/zones/" + zoneId + "/settings", {
-		method: "PATCH",
-		body: JSON.stringify({
-			"items": [{
-				"id": "proxied",
-				"value":"on"
-			}]
-		})
+function details(zoneId, recordId){
+	var suffix = recordId ? "/" + recordId : ""
+	return fetch.fetchAllPages("https://api.cloudflare.com/client/v4/zones/" + zoneId + "/dns_records" + suffix);
+}
+
+function setProxied(details){
+	// set proxied
+	details.proxied = true;
+	// update dns record
+	console.log(details.name)
+	fetch.fetch("https://api.cloudflare.com/client/v4/zones/" + details.zone_id + "/dns_records/" + details.id, {
+		method: "PUT",
+		body: JSON.stringify(details)
 	});
 }
 
@@ -21,7 +25,7 @@ function setProxiedForZone(zoneId){
 		var changes = records
 			.filter(r => r.proxiable)
 			.map(function(record){
-				return module.exports.setProxied(zoneId, record.id);
+				return module.exports.setProxied(record);
 			});
 		return Promise.all(changes);
 	});
@@ -30,5 +34,6 @@ function setProxiedForZone(zoneId){
 }
 
 module.exports.list = list;
+module.exports.details = details;
 module.exports.setProxied = setProxied;
 module.exports.setProxiedForZone = setProxiedForZone;
