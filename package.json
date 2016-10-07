@@ -10,7 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "arpm": "^1.0.3",
+    "byline": "^5.0.0",
     "cloudflare": "^1.0.4",
+    "most": "^1.0.3",
+    "most-promise-spread": "^1.0.0",
+    "most2whatstream": "^1.1.0",
     "node-fetch": "^1.6.1"
   }
 }

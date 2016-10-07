@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 
 var fetch = require("./src/util/fetch");
-var record = require("./src/record");
-var zone = require("./src/zone");
+var record = require("./src/service/record");
+var zone = require("./src/service/zone");
 
 module.exports.fetch = fetch;
 module.exports.record = record;
 module.exports.zone = zone;
 
 /**
- * Print all zone id's to console.
+ * Print all zone's to console.
  */
 function getAllZoneIds(optionalFilters){
 	return zone.list(optionalFilters).then(function(zones){
-		zones.map(z => console.log(z.id));
+		zones.map(z => console.log(id));
 		return zones;
 	});
 }
@@ -30,6 +30,7 @@ function main(){
 	if(process.argv.length <= 2){
 		return getAllZoneIds();
 	}else{
+		console.log("argument count", process.argv.length)
 		var zoneIds = process.argv.slice(2);
 		proxyZone(zoneIds);
 	}

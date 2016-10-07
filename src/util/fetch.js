@@ -1,10 +1,14 @@
+var arpm = require("arpm");
 var creds = require("../../creds.json");
 var fetch = require("node-fetch");
+var ratelimit = require("./ratelimit")
 
 module.exports.fetch = function(url, opts){
 	opts = opts || {}
 	opts.headers = Object.assign({}, module.exports.headers);
-	return fetch(url, opts);
+	return ratelimit().then(function(){
+		return fetch(url, opts);
+	});
 }
 
 module.exports.headers = {

@@ -1,4 +1,4 @@
-var fetch = require("./util/fetch");
+var fetch = require("../util/fetch");
 
 function list(zoneId){
 	return fetch.fetchAllPages("https://api.cloudflare.com/client/v4/zones/" + zoneId + "/dns_records");
@@ -13,8 +13,7 @@ function setProxied(details){
 	// set proxied
 	details.proxied = true;
 	// update dns record
-	console.log(details.name)
-	fetch.fetch("https://api.cloudflare.com/client/v4/zones/" + details.zone_id + "/dns_records/" + details.id, {
+	return fetch.fetch("https://api.cloudflare.com/client/v4/zones/" + details.zone_id + "/dns_records/" + details.id, {
 		method: "PUT",
 		body: JSON.stringify(details)
 	});
