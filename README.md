@@ -40,7 +40,7 @@ cat zones.json | ./bin/list-records.js > records.json
 jq 'select(.proxiable and .proxied == false)' records.json | ./bin/update-proxied.js
 ```
 
-== Plan
+## Plan
 
 1. Find a plan id.
   #. This is a per-zone call, but it *appears,* atm, that each zone uses the same set of plans. 
