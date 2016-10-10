@@ -6,6 +6,8 @@ var most = require("most")
 var toId = require("../src/util/to-id")
 var zone = require("../src/service/zone")
 
+process.on("unhandledRejection", console.log)
+
 /**
  * For each zone, set it's planId
  * @param zoneIds - a list of zone ids

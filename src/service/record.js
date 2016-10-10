@@ -16,7 +16,7 @@ function setProxied(details){
 	return fetch.fetch("https://api.cloudflare.com/client/v4/zones/" + details.zone_id + "/dns_records/" + details.id, {
 		method: "PUT",
 		body: JSON.stringify(details)
-	});
+	}).then(fetch.json);
 }
 
 function setProxiedForZone(zoneId){

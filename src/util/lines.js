@@ -1,13 +1,17 @@
 "use strict"
 
-var byline = require("byline")
+var Byline = require("byline")
 
 function lines(stdin){
 	stdin = stdin || process.stdin
-	var defer = Promise.defer()
-	var results = []
-	byline(stdin, {encoding: "utf8"}).on("data", d => results.push(d))
-	stdin.on("end", _ => defer.resolve(results))
+	var
+	  defer = Promise.defer(),
+	  results = [],
+	  byline = Byline(stdin, {encoding: "utf8"}).on("data", d => results.push(d))
+	stdin.on("end", function(){
+		byline.end()
+		defer.resolve(results)
+	})
 	return defer.promise
 }
 

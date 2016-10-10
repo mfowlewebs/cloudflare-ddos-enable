@@ -32,14 +32,15 @@ function setPlan(zoneId, planId){
 	return fetch.fetch("https://api.cloudflare.com/client/v4/zones/" + zoneId, {
 		method: "PATCH",
 		body: JSON.stringify({
-			plan: {
+			plan:{
 				id: planId
 			}
 		})
-	})
+	}).then(fetch.json)
 }
 
 module.exports.list = list;
 module.exports.details = details;
 module.exports.settings = settings;
 module.exports.plans = plans;
+module.exports.setPlan = setPlan;
