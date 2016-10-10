@@ -8,8 +8,7 @@ function lines(stdin){
 	  defer = Promise.defer(),
 	  results = [],
 	  byline = Byline(stdin, {encoding: "utf8"}).on("data", d => results.push(d))
-	stdin.on("end", function(){
-		byline.end()
+	byline.on("end", function(){
 		defer.resolve(results)
 	})
 	return defer.promise

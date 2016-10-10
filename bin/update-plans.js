@@ -3,6 +3,7 @@
 
 var lines = require("../src/util/lines")
 var most = require("most")
+var ratelimit = require("../src/util/ratelimit")
 var toId = require("../src/util/to-id")
 var zone = require("../src/service/zone")
 
@@ -40,9 +41,9 @@ function main(stdin, planId){
 
 if(require.main === module){
 	main().then(function(records){
-		records.forEach(function(record){
-			console.log(JSON.stringify(record))
-		})
+		records
+			.forEach(record => console.log(JSON.stringify(record)))
+			.then(ratelimit.done)
 	})
 }
 

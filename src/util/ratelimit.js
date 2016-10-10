@@ -6,7 +6,7 @@ var arpm = require("arpm");
 
 var rate = process.env.ARPM ? parseFloat(process.env.ARPM) : 200
 // rate limiter itself
-var limitGenerator = arpm(rate)
+var limitGenerator = arpm(rate, {drain: true})
 // a stream of "use tokens"
 var limit = most.generate(limitGenerator);
 // get a ReadableStream & reader because it has a
@@ -21,4 +21,14 @@ var reader = readable.getReader();
 module.exports = function(){
 	// Read a ticket off the reader.
 	return reader.read();
+}
+
+/**
+ * Close down the limit generator
+ *
+ * Sadly we cannot use arpm#drain, as most.generate will forever continue
+ * drawing from arpm, even when no requests are needed.
+ */
+module.exports.done = function(){
+	limitGenerator.pause()
 }

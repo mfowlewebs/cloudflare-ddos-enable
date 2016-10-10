@@ -1,16 +1,16 @@
 {
   "name": "cloudflare-ddos-enable",
   "version": "1.0.0",
-  "description": "",
+  "description": "Small, composable rate-limited utilities for working with the CloudFlare API",
   "main": "cloudflare-ddos-enable.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["cloudflare"],
+  "author": "Matthew Fowle",
   "license": "ISC",
   "dependencies": {
-    "arpm": "^1.0.3",
+    "arpm": "^1.1.1",
     "byline": "^5.0.0",
     "cloudflare": "^1.0.4",
     "most": "^1.0.3",

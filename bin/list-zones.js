@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
-var zone = require("../src/service/zone")
 var lines = require("../src/util/lines")
+var ratelimit = require("../src/util/ratelimit")
+var zone = require("../src/service/zone")
 
 /**
  * Get zones for an account, dump to stdout
@@ -15,7 +16,9 @@ function listZones(stdin){
 
 if(require.main === module){
 	listZones().then(function(zones){
-		zones.forEach(z => console.log(JSON.stringify(z)))
+		zones
+			.forEach(z => console.log(JSON.stringify(z)))
+			.then(ratelimit.done)
 	})
 }
 

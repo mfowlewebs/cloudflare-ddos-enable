@@ -2,10 +2,6 @@
 
 This is a set of two tools for updating the 'proxied' setting for CloudFlare DNS records.
 
-# Bugs
-
-At present, programs do not self-terminate on completion. They will hang indefinitely after work completes. Apologies.
-
 # Use
 
 ## Credentials
