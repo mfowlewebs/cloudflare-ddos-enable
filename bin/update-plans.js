@@ -5,9 +5,8 @@ var lines = require("../src/util/lines")
 var most = require("most")
 var ratelimit = require("../src/util/ratelimit")
 var toId = require("../src/util/to-id")
+var unhandled = require("../src/util/unhandled")
 var zone = require("../src/service/zone")
-
-process.on("unhandledRejection", console.log)
 
 /**
  * For each zone, set it's planId

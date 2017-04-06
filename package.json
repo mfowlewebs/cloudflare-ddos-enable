@@ -1,6 +1,6 @@
 {
   "name": "cloudflare-ddos-enable",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Small, composable rate-limited utilities for working with the CloudFlare API",
   "main": "cloudflare-ddos-enable.js",
   "scripts": {

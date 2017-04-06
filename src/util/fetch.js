@@ -8,7 +8,17 @@ module.exports.fetch = function(url, opts){
 	opts.headers = Object.assign({}, module.exports.headers);
 	return ratelimit().then(function(){
 		return fetch(url, opts);
-	});
+	}).then(function(response){
+		if(response.status >= 300){
+			return response.text().then(function(text){
+				var error = new Error(text);
+				error.status = response.status
+				error.url = url
+				throw error;
+			})
+		}
+		return response
+     })
 }
 
 module.exports.headers = {
@@ -19,11 +29,6 @@ module.exports.headers = {
 
 module.exports.json = function(response){
 	var status = response.status;
-	if(response.status >= 300){
-		var error = new Error("Bad response: " + status)
-		error.response = response;
-		throw error;
-	}
 	return response.json().then(function(json){
 		return {status, json};
 	});

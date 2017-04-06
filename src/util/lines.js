@@ -4,6 +4,9 @@ var Byline = require("byline")
 
 function lines(stdin){
 	stdin = stdin || process.stdin
+	if(stdin.isTTY){
+		return Promise.resolve([])
+	}
 	var
 	  defer = Promise.defer(),
 	  results = [],

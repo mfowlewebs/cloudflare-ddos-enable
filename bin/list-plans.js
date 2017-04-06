@@ -7,6 +7,7 @@ var mostPromiseSpread = require("most-promise-spread")
 var ratelimit = require("../src/util/ratelimit")
 var record = require("../src/service/record")
 var toId = require("../src/util/to-id")
+var unhandled = require("../src/util/unhandled")
 var zone = require("../src/service/zone")
 
 /**
